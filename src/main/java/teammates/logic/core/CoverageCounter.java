@@ -1,9 +1,16 @@
 package teammates.logic.core;
 
+/**
+ * A simple class that can be used to calculate coverage
+ */
 public class CoverageCounter {
     static private int size = 0;
-    static boolean[] coverage = new boolean[200];
+    static boolean[] coverage = new boolean[200]; // Max number of branches is 200.
 
+    /**
+     * Init the coverage counter
+     * @param newSize The total number of branches
+     */
     public static void init(int newSize) {
         size = newSize;
         for (int i = 0; i < 200; i++) {
@@ -11,10 +18,17 @@ public class CoverageCounter {
         }
     }
 
+    /**
+     * Set the specified branch as covered
+     * @param i the branch that should be set to covered
+     */
     public static void covered(int i) {
         coverage[i] = true;
     }
 
+    /**
+     * Print the coverage result
+     */
     public static void printCoverage() {
         System.out.println("################################################");
 
