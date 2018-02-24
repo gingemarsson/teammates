@@ -293,28 +293,36 @@ public final class FeedbackResponsesLogic {
             switch (type) {
             case INSTRUCTORS:
                 if (roster.getInstructorForEmail(userEmail) != null && role == UserRole.INSTRUCTOR) {
+                    CoverageCounter.covered(1);
                     return true;
                 }
+                else {CoverageCounter.covered(2);}
                 break;
             case OWN_TEAM_MEMBERS:
             case OWN_TEAM_MEMBERS_INCLUDING_SELF:
                 // Refers to Giver's Team Members
                 if (roster.isStudentsInSameTeam(response.giver, userEmail)) {
+                    CoverageCounter.covered(3);
                     return true;
                 }
+                else {CoverageCounter.covered(4);}
                 break;
             case RECEIVER:
                 // Response to team
                 if (question.recipientType.isTeam()) {
                     if (roster.isStudentInTeam(userEmail, response.recipient)) {
                         // this is a team name
+                        CoverageCounter.covered(5);
                         return true;
                     }
+                    else {CoverageCounter.covered(6);}
                     break;
                     // Response to individual
                 } else if (response.recipient.equals(userEmail)) {
+                    CoverageCounter.covered(7);
                     return true;
                 } else {
+                    CoverageCounter.covered(8);
                     break;
                 }
             case RECEIVER_TEAM_MEMBERS:
@@ -322,20 +330,27 @@ public final class FeedbackResponsesLogic {
                 if (question.recipientType.isTeam()) {
                     if (roster.isStudentInTeam(userEmail, response.recipient)) {
                         // this is a team name
+                        CoverageCounter.covered(9);
                         return true;
                     }
+                    else {CoverageCounter.covered(10);}
                     break;
                 } else if (roster.isStudentsInSameTeam(response.recipient, userEmail)) {
                     // Response to individual
+                    CoverageCounter.covered(11);
                     return true;
                 }
+                else {CoverageCounter.covered(12);}
                 break;
             case STUDENTS:
                 if (roster.isStudentInCourse(userEmail)) {
+                    CoverageCounter.covered(13);
                     return true;
                 }
+                else {CoverageCounter.covered(14);}
                 break;
             default:
+                CoverageCounter.covered(15);
                 Assumption.fail("Invalid FeedbackParticipantType for showNameTo in "
                                 + "FeedbackResponseLogic.isFeedbackParticipantNameVisibleToUser()");
                 break;

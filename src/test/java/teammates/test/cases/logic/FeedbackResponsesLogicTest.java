@@ -24,11 +24,7 @@ import teammates.common.datatransfer.questions.FeedbackQuestionType;
 import teammates.common.exception.EntityAlreadyExistsException;
 import teammates.common.exception.EntityDoesNotExistException;
 import teammates.common.exception.InvalidParametersException;
-import teammates.logic.core.FeedbackQuestionsLogic;
-import teammates.logic.core.FeedbackResponseCommentsLogic;
-import teammates.logic.core.FeedbackResponsesLogic;
-import teammates.logic.core.FeedbackSessionsLogic;
-import teammates.logic.core.StudentsLogic;
+import teammates.logic.core.*;
 import teammates.storage.api.InstructorsDb;
 import teammates.storage.api.StudentsDb;
 import teammates.test.driver.AssertHelper;
@@ -54,6 +50,8 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
     @Test
     public void allTests() throws Exception {
+        CoverageCounter.init(15);
+
         testIsNameVisibleTo();
         testGetViewableResponsesForQuestionInSection();
         testUpdateFeedbackResponse();
@@ -64,6 +62,8 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
         testDeleteFeedbackResponsesForStudent();
         testSpecialCharactersInTeamName();
         testDeleteFeedbackResponsesForCourse();
+
+        CoverageCounter.printCoverage();
     }
 
     private void testSpecialCharactersInTeamName() {
