@@ -34,6 +34,7 @@ import teammates.common.exception.InvalidParametersException;
 import teammates.common.util.Const;
 import teammates.common.util.ThreadHelper;
 import teammates.common.util.TimeHelper;
+import teammates.logic.core.CoverageCounter;
 import teammates.logic.core.FeedbackQuestionsLogic;
 import teammates.logic.core.FeedbackResponsesLogic;
 import teammates.logic.core.FeedbackSessionsLogic;
@@ -56,6 +57,7 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
     @Test
     public void testAll() throws Exception {
+        CoverageCounter.init(10);
 
         testGetFeedbackSessionsForCourse();
         testGetFeedbackSessionsListForInstructor();
@@ -81,6 +83,8 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         testIsFeedbackSessionFullyCompletedByStudent();
 
         testDeleteFeedbackSessionsForCourse();
+
+        CoverageCounter.printCoverage();
     }
 
     private void testGetFeedbackSessionsListForInstructor() {

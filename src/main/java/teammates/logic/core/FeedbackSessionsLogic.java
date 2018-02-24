@@ -1984,23 +1984,30 @@ public final class FeedbackSessionsLogic {
                         && relatedQuestion.isResponseVisibleTo(FeedbackParticipantType.RECEIVER)
                 || response.giver.equals(userEmail)
                 || isStudent(role) && relatedQuestion.isResponseVisibleTo(FeedbackParticipantType.STUDENTS)) {
+            CoverageCounter.covered(1);
             isVisibleResponse = true;
         } else if (studentsEmailInTeam != null && isStudent(role)) {
             if (relatedQuestion.recipientType == FeedbackParticipantType.TEAMS
                     && relatedQuestion.isResponseVisibleTo(FeedbackParticipantType.RECEIVER)
                     && response.recipient.equals(student.team)) {
+                CoverageCounter.covered(2);
                 isVisibleResponse = true;
             } else if (relatedQuestion.giverType == FeedbackParticipantType.TEAMS
                        && studentsEmailInTeam.contains(response.giver)) {
+                CoverageCounter.covered(3);
                 isVisibleResponse = true;
             } else if (relatedQuestion.isResponseVisibleTo(FeedbackParticipantType.OWN_TEAM_MEMBERS)
                        && studentsEmailInTeam.contains(response.giver)) {
+                CoverageCounter.covered(4);
                 isVisibleResponse = true;
             } else if (relatedQuestion.isResponseVisibleTo(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS)
                        && studentsEmailInTeam.contains(response.recipient)) {
+                CoverageCounter.covered(5);
                 isVisibleResponse = true;
             }
+            else {CoverageCounter.covered(6);}
         }
+        else {CoverageCounter.covered(7);}
         if (isVisibleResponse && instructor != null) {
             boolean isGiverSectionRestricted =
                     !instructor.isAllowedForPrivilege(response.giverSection,
@@ -2016,9 +2023,12 @@ public final class FeedbackSessionsLogic {
 
             boolean isNotAllowedForInstructor = isGiverSectionRestricted || isRecipientSectionRestricted;
             if (isNotAllowedForInstructor) {
+                CoverageCounter.covered(8);
                 isVisibleResponse = false;
             }
+            else {CoverageCounter.covered(9);}
         }
+        else {CoverageCounter.covered(10);}
         return isVisibleResponse;
     }
 
