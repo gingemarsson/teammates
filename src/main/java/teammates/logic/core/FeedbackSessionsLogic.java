@@ -1561,8 +1561,10 @@ public final class FeedbackSessionsLogic {
                 courseId, feedbackSessionName);
 
         if (session == null) {
+            CoverageCounter.covered(1);
             throw new EntityDoesNotExistException(ERROR_NON_EXISTENT_FS_VIEW + courseId + "/" + feedbackSessionName);
         }
+        else {CoverageCounter.covered(2);}
 
         // create empty data containers to store results
         List<FeedbackResponseAttributes> responses = new ArrayList<>();
@@ -1579,12 +1581,14 @@ public final class FeedbackSessionsLogic {
         boolean isPrivateSessionNotCreatedByThisUser = session
                 .isPrivateSession() && !session.isCreator(userEmail);
         if (isPrivateSessionNotCreatedByThisUser) {
+            CoverageCounter.covered(3);
             // return empty result set
             return new FeedbackSessionResultsBundle(
                     session, responses, relevantQuestions, emailNameTable,
                     emailLastNameTable, emailTeamNameTable, sectionTeamNameTable,
                     visibilityTable, responseStatus, roster, responseComments);
         }
+        else {CoverageCounter.covered(4);}
 
         List<FeedbackQuestionAttributes> allQuestions = fqLogic.getFeedbackQuestionsForSession(
                                                                     feedbackSessionName, courseId);
@@ -1596,9 +1600,11 @@ public final class FeedbackSessionsLogic {
             boolean isPrivateSessionCreatedByThisUser = session
                     .isCreator(userEmail) && session.isPrivateSession();
             if (isPrivateSessionCreatedByThisUser) {
+                CoverageCounter.covered(5);
                 responsesForThisQn = frLogic
                         .getFeedbackResponsesForQuestion(question.getId());
             } else {
+                CoverageCounter.covered(6);
                 responsesForThisQn = frLogic
                         .getViewableFeedbackResponsesForQuestionInSection(
                                 question, userEmail, role, section);
@@ -1606,9 +1612,11 @@ public final class FeedbackSessionsLogic {
 
             boolean hasResponses = !responsesForThisQn.isEmpty();
             if (hasResponses) {
+                CoverageCounter.covered(7);
                 relevantQuestions.put(question.getId(), question);
                 responses.addAll(responsesForThisQn);
                 for (FeedbackResponseAttributes response : responsesForThisQn) {
+                    CoverageCounter.covered(8);
                     relevantResponse.put(response.getId(), response);
                     addEmailNamePairsToTable(emailNameTable, response,
                             question, roster);
@@ -1620,18 +1628,22 @@ public final class FeedbackSessionsLogic {
                             userEmail, role, roster);
                 }
             }
+            else {CoverageCounter.covered(9);}
         }
 
         StudentAttributes student = null;
         Set<String> studentsEmailInTeam = new HashSet<>();
         if (isStudent(role)) {
+            CoverageCounter.covered(10);
             student = studentsLogic.getStudentForEmail(courseId, userEmail);
             List<StudentAttributes> studentsInTeam = studentsLogic
                     .getStudentsForTeam(student.team, courseId);
             for (StudentAttributes teammates : studentsInTeam) {
+                CoverageCounter.covered(11);
                 studentsEmailInTeam.add(teammates.email);
             }
         }
+        else {CoverageCounter.covered(13);}
 
         List<FeedbackResponseCommentAttributes> allResponseComments =
                 frcLogic.getFeedbackResponseCommentForSession(courseId,
@@ -1643,19 +1655,23 @@ public final class FeedbackSessionsLogic {
                     role, student, studentsEmailInTeam, relatedResponse, relatedQuestion, frc);
             if (isVisibleResponseComment) {
                 if (!frcLogic.isNameVisibleToUser(frc, relatedResponse, userEmail, roster)) {
+                    CoverageCounter.covered(14);
                     frc.giverEmail = Const.DISPLAYED_NAME_FOR_ANONYMOUS_PARTICIPANT;
-                }
+                } else {CoverageCounter.covered(15);}
 
                 if (responseComments.get(frc.feedbackResponseId) == null) {
+                    CoverageCounter.covered(16);
                     responseComments.put(frc.feedbackResponseId,
                             new ArrayList<FeedbackResponseCommentAttributes>());
                 }
+                else {CoverageCounter.covered(17);}
                 responseComments.get(frc.feedbackResponseId).add(frc);
-            }
+            } else {CoverageCounter.covered(18);}
         }
 
         for (List<FeedbackResponseCommentAttributes> responseCommentList : responseComments
                 .values()) {
+            CoverageCounter.covered(19);
             sortByCreatedDate(responseCommentList);
         }
 
