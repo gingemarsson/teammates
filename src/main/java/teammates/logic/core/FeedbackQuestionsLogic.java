@@ -329,8 +329,10 @@ public final class FeedbackQuestionsLogic {
         switch (recipientType) {
         case SELF:
             if (question.giverType == FeedbackParticipantType.TEAMS) {
+                CoverageCounter.covered(1);
                 recipients.put(studentGiver.team, studentGiver.team);
             } else {
+                CoverageCounter.covered(2);
                 recipients.put(giver, Const.USER_NAME_FOR_SELF);
             }
             break;
@@ -339,7 +341,11 @@ public final class FeedbackQuestionsLogic {
             for (StudentAttributes student : studentsInCourse) {
                 // Ensure student does not evaluate himself
                 if (!giver.equals(student.email)) {
+                    CoverageCounter.covered(3);
                     recipients.put(student.email, student.name);
+                }
+                else {
+                    CoverageCounter.covered(4);
                 }
             }
             break;
@@ -348,8 +354,10 @@ public final class FeedbackQuestionsLogic {
             for (InstructorAttributes instr : instructorsInCourse) {
                 // Ensure instructor does not evaluate himself
                 if (!giver.equals(instr.email)) {
+                    CoverageCounter.covered(5);
                     recipients.put(instr.email, instr.name);
                 }
+                else {CoverageCounter.covered(6);}
             }
             break;
         case TEAMS:
@@ -357,23 +365,29 @@ public final class FeedbackQuestionsLogic {
             for (TeamDetailsBundle team : teams) {
                 // Ensure student('s team) does not evaluate own team.
                 if (!giverTeam.equals(team.name)) {
+                    CoverageCounter.covered(7);
                     // recipientEmail doubles as team name in this case.
                     recipients.put(team.name, team.name);
                 }
+                else {CoverageCounter.covered(8);}
             }
             break;
         case OWN_TEAM:
+            CoverageCounter.covered(9);
             recipients.put(giverTeam, giverTeam);
             break;
         case OWN_TEAM_MEMBERS:
             List<StudentAttributes> students = studentsLogic.getStudentsForTeam(giverTeam, question.courseId);
             for (StudentAttributes student : students) {
                 if (!student.email.equals(giver)) {
+                    CoverageCounter.covered(10);
                     recipients.put(student.email, student.name);
                 }
+                else {CoverageCounter.covered(11);}
             }
             break;
         case OWN_TEAM_MEMBERS_INCLUDING_SELF:
+            CoverageCounter.covered(12);
             List<StudentAttributes> teamMembers = studentsLogic.getStudentsForTeam(giverTeam, question.courseId);
             for (StudentAttributes student : teamMembers) {
                 // accepts self feedback too
@@ -381,9 +395,11 @@ public final class FeedbackQuestionsLogic {
             }
             break;
         case NONE:
+            CoverageCounter.covered(13);
             recipients.put(Const.GENERAL_QUESTION, Const.GENERAL_QUESTION);
             break;
         default:
+            CoverageCounter.covered(14);
             break;
         }
         return recipients;

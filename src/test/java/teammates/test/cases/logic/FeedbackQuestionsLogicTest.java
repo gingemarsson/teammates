@@ -18,6 +18,7 @@ import teammates.common.exception.InvalidParametersException;
 import teammates.common.util.Const;
 import teammates.common.util.FieldValidator;
 import teammates.logic.core.AccountsLogic;
+import teammates.logic.core.CoverageCounter;
 import teammates.logic.core.FeedbackQuestionsLogic;
 import teammates.logic.core.FeedbackResponsesLogic;
 
@@ -31,6 +32,8 @@ public class FeedbackQuestionsLogicTest extends BaseLogicTest {
 
     @Test
     public void allTests() throws Exception {
+        CoverageCounter.init(14);
+
         testGetRecipientsForQuestion();
         testGetFeedbackQuestionsForInstructor();
         testGetFeedbackQuestionsForStudents();
@@ -43,6 +46,8 @@ public class FeedbackQuestionsLogicTest extends BaseLogicTest {
         testDeleteQuestion();
         testAddQuestionNoIntegrityCheck();
         testDeleteQuestionsForCourse();
+
+        CoverageCounter.printCoverage();
     }
 
     private void testGetRecipientsForQuestion() throws Exception {
