@@ -213,49 +213,68 @@ public final class FeedbackResponseCommentsLogic {
             String userEmail, CourseRoster roster, List<FeedbackParticipantType> showNameTo) {
         String responseGiverTeam = "giverTeam";
         if (roster.getStudentForEmail(response.giver) != null) {
+            CoverageCounter.covered(1);
             responseGiverTeam = roster.getStudentForEmail(response.giver).team;
         }
+        else {CoverageCounter.covered(2);}
         String responseRecipientTeam = "recipientTeam";
         if (roster.getStudentForEmail(response.recipient) != null) {
+            CoverageCounter.covered(3);
             responseRecipientTeam = roster.getStudentForEmail(response.recipient).team;
         }
+        else {CoverageCounter.covered(4);}
         String currentUserTeam = "currentUserTeam";
         if (roster.getStudentForEmail(userEmail) != null) {
+            CoverageCounter.covered(5);
             currentUserTeam = roster.getStudentForEmail(userEmail).team;
         }
+        else {CoverageCounter.covered(6);}
         for (FeedbackParticipantType type : showNameTo) {
             switch (type) {
             case INSTRUCTORS:
                 if (roster.getInstructorForEmail(userEmail) != null) {
+                    CoverageCounter.covered(7);
                     return true;
                 }
+                else {CoverageCounter.covered(8);}
                 break;
             case OWN_TEAM_MEMBERS:
                 if (responseGiverTeam.equals(currentUserTeam)) {
+                    CoverageCounter.covered(9);
                     return true;
                 }
+                else {CoverageCounter.covered(10);}
                 break;
             case RECEIVER:
                 if (userEmail.equals(response.recipient)) {
+                    CoverageCounter.covered(11);
                     return true;
                 }
+                else {CoverageCounter.covered(12);}
                 break;
             case RECEIVER_TEAM_MEMBERS:
                 if (responseRecipientTeam.equals(currentUserTeam)) {
+                    CoverageCounter.covered(13);
                     return true;
                 }
+                else {CoverageCounter.covered(14);}
                 break;
             case STUDENTS:
                 if (roster.getStudentForEmail(userEmail) != null) {
+                    CoverageCounter.covered(15);
                     return true;
                 }
+                else {CoverageCounter.covered(16);}
                 break;
             case GIVER:
                 if (userEmail.equals(response.giver)) {
+                    CoverageCounter.covered(17);
                     return true;
                 }
+                else {CoverageCounter.covered(18);}
                 break;
             default:
+                CoverageCounter.covered(19);
                 break;
             }
         }

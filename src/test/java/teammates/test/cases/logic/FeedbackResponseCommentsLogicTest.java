@@ -3,6 +3,8 @@ package teammates.test.cases.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -13,6 +15,7 @@ import teammates.common.datatransfer.attributes.FeedbackResponseAttributes;
 import teammates.common.datatransfer.attributes.FeedbackResponseCommentAttributes;
 import teammates.common.exception.EntityDoesNotExistException;
 import teammates.common.exception.InvalidParametersException;
+import teammates.logic.core.CoverageCounter;
 import teammates.logic.core.FeedbackQuestionsLogic;
 import teammates.logic.core.FeedbackResponseCommentsLogic;
 import teammates.logic.core.FeedbackResponsesLogic;
@@ -25,6 +28,16 @@ public class FeedbackResponseCommentsLogicTest extends BaseLogicTest {
     private static final FeedbackResponseCommentsLogic frcLogic = FeedbackResponseCommentsLogic.inst();
     private static final FeedbackQuestionsLogic fqLogic = FeedbackQuestionsLogic.inst();
     private static final FeedbackResponsesLogic frLogic = FeedbackResponsesLogic.inst();
+
+    @Before
+    public void prepareCoverage() {
+        CoverageCounter.init(19);
+    }
+
+    @After
+    public void printCoverage() {
+        CoverageCounter.printCoverage();
+    }
 
     @Override
     protected void prepareTestData() {
