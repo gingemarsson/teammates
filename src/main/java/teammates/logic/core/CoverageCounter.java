@@ -19,11 +19,11 @@ public class CoverageCounter {
     }
 
     /**
-     * Set the specified branch as covered
+     * Set the specified branch as covered. Branches are 1-indexed.
      * @param i the branch that should be set to covered
      */
     public static void covered(int i) {
-        coverage[i] = true;
+        coverage[i-1] = true;
     }
 
     /**
