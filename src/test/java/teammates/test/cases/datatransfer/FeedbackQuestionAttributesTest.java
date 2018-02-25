@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.google.appengine.api.datastore.Text;
@@ -18,6 +20,7 @@ import teammates.common.datatransfer.questions.FeedbackTextQuestionDetails;
 import teammates.common.util.Const;
 import teammates.common.util.FieldValidator;
 import teammates.common.util.StringHelper;
+import teammates.logic.core.CoverageCounter;
 import teammates.test.cases.BaseTestCase;
 
 /**
@@ -37,6 +40,16 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
             this.updatedAt = updatedAt;
         }
 
+    }
+
+    @BeforeClass
+    public void initCoverageCounter() {
+        CoverageCounter.init(48);
+    }
+
+    @AfterClass
+    public void printCoverage() {
+        CoverageCounter.printCoverage();
     }
 
     @Test
