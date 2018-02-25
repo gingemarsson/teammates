@@ -15,6 +15,7 @@ import teammates.common.util.SanitizationHelper;
 import teammates.common.util.StatusMessage;
 import teammates.common.util.StatusMessageColor;
 import teammates.common.util.TimeHelper;
+import teammates.logic.core.CoverageCounter;
 import teammates.ui.pagedata.AdminSessionsPageData;
 
 public class AdminSessionsPageAction extends Action {
@@ -325,12 +326,13 @@ public class AdminSessionsPageAction extends Action {
         String timeZone = getRequestParamValue(Const.ParamsNames.FEEDBACK_SESSION_TIMEZONE);
 
         if (condition.contentEquals("null")) {
+            CoverageCounter.covered(1);
 
             return startDate == null && endDate == null && startHour == null
                    && endHour == null && startMin == null && endMin == null && timeZone == null;
 
         } else if (condition.contentEquals("notNull")) {
-
+            CoverageCounter.covered(2);
             return startDate != null && endDate != null && startHour != null
                    && endHour != null && startMin != null && endMin != null && timeZone != null
                    && !startDate.trim().isEmpty() && !endDate.trim().isEmpty() && !startHour.trim().isEmpty()
@@ -338,6 +340,7 @@ public class AdminSessionsPageAction extends Action {
                    && !endMin.trim().isEmpty() && !timeZone.trim().isEmpty();
 
         } else {
+            CoverageCounter.covered(3);
             return false;
         }
 
