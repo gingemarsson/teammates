@@ -25,6 +25,7 @@ import teammates.common.util.Templates;
 import teammates.common.util.Templates.FeedbackQuestion.FormTemplates;
 import teammates.common.util.Templates.FeedbackQuestion.Slots;
 import teammates.logic.core.CoursesLogic;
+import teammates.logic.core.CoverageCounter;
 import teammates.logic.core.InstructorsLogic;
 import teammates.logic.core.StudentsLogic;
 import teammates.ui.template.InstructorFeedbackResultsResponseRow;
@@ -192,6 +193,7 @@ public class FeedbackMsqQuestionDetails extends FeedbackQuestionDetails {
         Boolean isOtherSelected = existingMsqResponse.isOtherOptionAnswer();
 
         for (int i = 0; i < choices.size(); i++) {
+            CoverageCounter.covered(1);
             String optionFragment =
                     Templates.populateTemplate(optionFragmentTemplate,
                             Slots.QUESTION_INDEX, Integer.toString(qnIdx),
@@ -205,6 +207,7 @@ public class FeedbackMsqQuestionDetails extends FeedbackQuestionDetails {
         }
 
         if (otherEnabled) {
+            CoverageCounter.covered(2);
             String otherOptionFragmentTemplate = FormTemplates.MSQ_SUBMISSION_FORM_OTHEROPTIONFRAGMENT;
             String otherOptionFragment =
                     Templates.populateTemplate(otherOptionFragmentTemplate,
@@ -221,10 +224,12 @@ public class FeedbackMsqQuestionDetails extends FeedbackQuestionDetails {
                             Slots.MSQ_OTHER_OPTION_ANSWER, isOtherSelected ? "1" : "0");
             optionListHtml.append(otherOptionFragment).append(Const.EOL);
         }
+        else {CoverageCounter.covered(3);}
 
         boolean isMinSelectableChoicesEnabled = minSelectableChoices != Integer.MIN_VALUE;
 
         if (!isMinSelectableChoicesEnabled) {
+            CoverageCounter.covered(4);
             // additional checkbox for user to submit a blank response ("None of the above")
             String optionFragment =
                     Templates.populateTemplate(optionFragmentTemplate,
@@ -237,6 +242,7 @@ public class FeedbackMsqQuestionDetails extends FeedbackQuestionDetails {
                             Slots.MSQ_CHOICE_TEXT, "<i>" + Const.NONE_OF_THE_ABOVE + "</i>");
             optionListHtml.append(optionFragment).append(Const.EOL);
         }
+        else {CoverageCounter.covered(5);}
 
         boolean isMaxSelectableChoicesEnabled = maxSelectableChoices != Integer.MIN_VALUE;
 
