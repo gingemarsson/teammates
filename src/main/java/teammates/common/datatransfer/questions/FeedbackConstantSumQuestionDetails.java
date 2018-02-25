@@ -22,6 +22,7 @@ import teammates.common.util.StringHelper;
 import teammates.common.util.Templates;
 import teammates.common.util.Templates.FeedbackQuestion.FormTemplates;
 import teammates.common.util.Templates.FeedbackQuestion.Slots;
+import teammates.logic.core.CoverageCounter;
 import teammates.logic.core.FeedbackQuestionsLogic;
 import teammates.ui.template.InstructorFeedbackResultsResponseRow;
 
@@ -685,9 +686,11 @@ public class FeedbackConstantSumQuestionDetails extends FeedbackQuestionDetails 
         List<String> errors = new ArrayList<>();
 
         if (responses.isEmpty()) {
+            CoverageCounter.covered(1);
             //No responses, no errors.
             return errors;
         }
+        else {CoverageCounter.covered(2);}
 
         String fqId = responses.get(0).feedbackQuestionId;
         FeedbackQuestionsLogic fqLogic = FeedbackQuestionsLogic.inst();
@@ -697,8 +700,10 @@ public class FeedbackConstantSumQuestionDetails extends FeedbackQuestionDetails 
         int maxResponsesPossible = numRecipients;
         if (numOfResponseSpecific == Const.MAX_POSSIBLE_RECIPIENTS
                 || numOfResponseSpecific > maxResponsesPossible) {
+            CoverageCounter.covered(3);
             numOfResponseSpecific = maxResponsesPossible;
         }
+        else {CoverageCounter.covered(4);}
 
         int numOptions = distributeToRecipients ? numOfResponseSpecific : constSumOptions.size();
         int totalPoints = pointsPerOption ? points * numOptions : points;
@@ -709,40 +714,51 @@ public class FeedbackConstantSumQuestionDetails extends FeedbackQuestionDetails 
             //Check that all response points are >= 0
             for (Integer i : frd.getAnswerList()) {
                 if (i < 0) {
+                    CoverageCounter.covered(5);
                     errors.add(Const.FeedbackQuestion.CONST_SUM_ERROR_NEGATIVE);
                     return errors;
                 }
+                else {CoverageCounter.covered(6);}
             }
 
             //Check that points sum up properly
             if (distributeToRecipients) {
+                CoverageCounter.covered(7);
                 sum += frd.getAnswerList().get(0);
             } else {
                 sum = 0;
                 for (Integer i : frd.getAnswerList()) {
+                    CoverageCounter.covered(8);
                     sum += i;
                 }
                 if (sum != totalPoints || frd.getAnswerList().size() != constSumOptions.size()) {
+                    CoverageCounter.covered(9);
                     errors.add(Const.FeedbackQuestion.CONST_SUM_ERROR_MISMATCH);
                     return errors;
                 }
+                else {CoverageCounter.covered(10);}
             }
 
             Set<Integer> answerSet = new HashSet<>();
             if (this.forceUnevenDistribution) {
                 for (int i : frd.getAnswerList()) {
                     if (answerSet.contains(i)) {
+                        CoverageCounter.covered(11);
                         errors.add(Const.FeedbackQuestion.CONST_SUM_ERROR_UNIQUE);
                         return errors;
                     }
+                    else {CoverageCounter.covered(12);}
                     answerSet.add(i);
                 }
             }
+            else {CoverageCounter.covered(13);}
         }
         if (distributeToRecipients && sum != totalPoints) {
+            CoverageCounter.covered(14);
             errors.add(Const.FeedbackQuestion.CONST_SUM_ERROR_MISMATCH + sum + "/" + totalPoints);
             return errors;
         }
+        else {CoverageCounter.covered(15);}
 
         return errors;
     }
