@@ -17,6 +17,7 @@ import teammates.common.util.Const;
 import teammates.common.util.FieldValidator;
 import teammates.common.util.JsonUtils;
 import teammates.common.util.SanitizationHelper;
+import teammates.logic.core.CoverageCounter;
 import teammates.storage.entity.FeedbackQuestion;
 
 public class FeedbackQuestionAttributes extends EntityAttributes<FeedbackQuestion>
@@ -357,102 +358,150 @@ public class FeedbackQuestionAttributes extends EntityAttributes<FeedbackQuestio
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
+            CoverageCounter.covered(1);
             return true;
         }
+        else {CoverageCounter.covered(2);}
 
         if (obj == null) {
+            CoverageCounter.covered(3);
             return false;
         }
+        else {CoverageCounter.covered(4);}
 
         if (getClass() != obj.getClass()) {
+            CoverageCounter.covered(5);
             return false;
         }
+        else {CoverageCounter.covered(6);}
 
         FeedbackQuestionAttributes other = (FeedbackQuestionAttributes) obj;
 
         if (courseId == null) {
             if (other.courseId != null) {
+                CoverageCounter.covered(7);
                 return false;
             }
+            else {CoverageCounter.covered(8);}
         } else if (!courseId.equals(other.courseId)) {
+            CoverageCounter.covered(9);
             return false;
         }
+        else {CoverageCounter.covered(10);}
 
         if (creatorEmail == null) {
             if (other.creatorEmail != null) {
+                CoverageCounter.covered(11);
                 return false;
             }
+            else {CoverageCounter.covered(12);}
         } else if (!creatorEmail.equals(other.creatorEmail)) {
+            CoverageCounter.covered(13);
             return false;
         }
+        else {CoverageCounter.covered(14);}
 
         if (feedbackSessionName == null) {
             if (other.feedbackSessionName != null) {
+                CoverageCounter.covered(15);
                 return false;
             }
+            else {CoverageCounter.covered(16);}
         } else if (!feedbackSessionName.equals(other.feedbackSessionName)) {
+            CoverageCounter.covered(17);
             return false;
         }
+        else {CoverageCounter.covered(18);}
 
         if (giverType != other.giverType) {
+            CoverageCounter.covered(19);
             return false;
         }
+        else {CoverageCounter.covered(20);}
 
         if (numberOfEntitiesToGiveFeedbackTo != other.numberOfEntitiesToGiveFeedbackTo) {
+            CoverageCounter.covered(21);
             return false;
         }
+        else {CoverageCounter.covered(22);}
 
         if (questionNumber != other.questionNumber) {
+            CoverageCounter.covered(23);
             return false;
         }
+        else {CoverageCounter.covered(24);}
 
         if (questionMetaData == null) {
             if (other.questionMetaData != null) {
+                CoverageCounter.covered(25);
                 return false;
             }
+            else  {CoverageCounter.covered(26);}
         } else if (!questionMetaData.equals(other.questionMetaData)) {
+            CoverageCounter.covered(27);
             return false;
         }
+        else {CoverageCounter.covered(28);}
 
         if (questionDescription == null) {
             if (other.questionDescription != null) {
+                CoverageCounter.covered(29);
                 return false;
             }
+            else {CoverageCounter.covered(30);}
         } else if (!questionDescription.equals(other.questionDescription)) {
+            CoverageCounter.covered(31);
             return false;
         }
+        else {CoverageCounter.covered(32);}
 
         if (questionType != other.questionType) {
+            CoverageCounter.covered(33);
             return false;
         }
+        else {CoverageCounter.covered(34);}
 
         if (recipientType != other.recipientType) {
+            CoverageCounter.covered(35);
             return false;
         }
+        else {CoverageCounter.covered(36);}
 
         if (showGiverNameTo == null) {
             if (other.showGiverNameTo != null) {
+                CoverageCounter.covered(37);
                 return false;
             }
+            else {CoverageCounter.covered(38);}
         } else if (!showGiverNameTo.equals(other.showGiverNameTo)) {
+            CoverageCounter.covered(39);
             return false;
         }
+        else {CoverageCounter.covered(40);}
 
         if (showRecipientNameTo == null) {
             if (other.showRecipientNameTo != null) {
+                CoverageCounter.covered(41);
                 return false;
             }
+            else {CoverageCounter.covered(42);}
         } else if (!showRecipientNameTo.equals(other.showRecipientNameTo)) {
+            CoverageCounter.covered(43);
             return false;
         }
+        else {CoverageCounter.covered(44);}
 
         if (showResponsesTo == null) {
             if (other.showResponsesTo != null) {
+                CoverageCounter.covered(45);
                 return false;
             }
+            else {CoverageCounter.covered(46);}
         } else if (!showResponsesTo.equals(other.showResponsesTo)) {
+            CoverageCounter.covered(47);
             return false;
         }
+        else {CoverageCounter.covered(48);}
 
         return true;
     }
