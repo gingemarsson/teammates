@@ -16,6 +16,7 @@ import teammates.common.util.Assumption;
 import teammates.common.util.Const;
 import teammates.common.util.StringHelper;
 import teammates.common.util.TimeHelper;
+import teammates.logic.core.CoverageCounter;
 import teammates.ui.template.AdminActivityLogTableRow;
 
 public class AdminActivityLogPageData extends PageData {
@@ -189,41 +190,59 @@ public class AdminActivityLogPageData extends PageData {
     public boolean filterLog(ActivityLogEntry logEntry) {
         if (q == null) {
             if (this.queryMessage == null) {
+                CoverageCounter.covered(1);
                 this.queryMessage = "Error parsing the query. QueryParameters not created.";
             }
+            else {CoverageCounter.covered(2);}
             return shouldIncludeLogEntry(logEntry);
         }
+        else {CoverageCounter.covered(3);}
 
         //Filter based on what is in the query
         if (q.isRequestInQuery && !arrayContains(q.requestValues, logEntry.getActionName())) {
+            CoverageCounter.covered(4);
             return false;
         }
+        else {CoverageCounter.covered(5);}
         if (q.isResponseInQuery && !arrayContains(q.responseValues, logEntry.getActionResponse())) {
+            CoverageCounter.covered(6);
             return false;
         }
+        else {CoverageCounter.covered(7);}
         if (q.isPersonInQuery
                 && !logEntry.getUserName().toLowerCase().contains(q.personValue.toLowerCase())
                 && !logEntry.getUserGoogleId().toLowerCase().contains(q.personValue.toLowerCase())
                 && !logEntry.getUserEmail().toLowerCase().contains(q.personValue.toLowerCase())) {
+            CoverageCounter.covered(8);
             return false;
         }
+        else {CoverageCounter.covered(9);}
         if (q.isRoleInQuery && !arrayContains(q.roleValues, logEntry.getUserRole())) {
+            CoverageCounter.covered(10);
             return false;
         }
+        else {CoverageCounter.covered(11);}
         if (q.isCutoffInQuery
                 && (logEntry.getActionTimeTaken() == 0 || logEntry.getActionTimeTaken() < q.cutoffValue)) {
+            CoverageCounter.covered(12);
             return false;
         }
+        else {CoverageCounter.covered(13);}
         if (q.isInfoInQuery) {
             for (String keyString : q.infoValues) {
                 if (!logEntry.getLogMessage().toLowerCase().contains(keyString.toLowerCase())) {
+                    CoverageCounter.covered(14);
                     return false;
                 }
+                else {CoverageCounter.covered(15);}
             }
         }
+        else {CoverageCounter.covered(16);}
         if (q.isIdInQuery && !arrayContains(q.idValues, logEntry.getLogId())) {
+            CoverageCounter.covered(17);
             return false;
         }
+        else  {CoverageCounter.covered(18);}
 
         return shouldIncludeLogEntry(logEntry);
     }

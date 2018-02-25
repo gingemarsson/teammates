@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
@@ -18,6 +20,7 @@ import teammates.common.util.ActivityLogEntry;
 import teammates.common.util.Const;
 import teammates.common.util.JsonUtils;
 import teammates.common.util.TimeHelper;
+import teammates.logic.core.CoverageCounter;
 import teammates.test.driver.FileHelper;
 import teammates.test.driver.TestProperties;
 import teammates.ui.controller.AdminActivityLogPageAction;
@@ -56,6 +59,16 @@ public class AdminActivityLogPageActionTest extends BaseActionTest {
     private List<List<String>> logMessages;
 
     private SimpleDateFormat formatterAdminTime;
+
+    @BeforeClass
+    public void initCoverageCounter() {
+        CoverageCounter.init(18);
+    }
+
+    @AfterClass
+    public void printCoverage() {
+        CoverageCounter.printCoverage();
+    }
 
     @Override
     protected String getActionUri() {
