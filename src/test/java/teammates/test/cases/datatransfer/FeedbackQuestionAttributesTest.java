@@ -18,6 +18,7 @@ import teammates.common.datatransfer.questions.FeedbackTextQuestionDetails;
 import teammates.common.util.Const;
 import teammates.common.util.FieldValidator;
 import teammates.common.util.StringHelper;
+import teammates.storage.entity.FeedbackQuestion;
 import teammates.test.cases.BaseTestCase;
 
 /**
@@ -26,6 +27,28 @@ import teammates.test.cases.BaseTestCase;
 public class FeedbackQuestionAttributesTest extends BaseTestCase {
 
     private DataBundle typicalBundle = getTypicalDataBundle();
+
+    //First test for equals
+    @Test
+    public void testEqualsNull() throws Exception {
+        // if a.equals(b)
+        //If all parameters of a and b are null, return true.
+        //If all parameters of a are null and b = null, return false.
+        //If any parameter in a!= null and all parameters in b is null, return false
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes() ;
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes() ;
+
+            boolean  a = first.equals(null);
+            boolean b = first.equals(snd);
+            first.courseId = "1";
+            boolean c = first.equals(snd);
+            assertFalse(a);
+            assertTrue(b);
+            assertFalse(c);
+
+         // attributes to be set after construction
+        }
+
 
     private static class FeedbackQuestionAttributesWithModifiableTimestamp extends FeedbackQuestionAttributes {
 
