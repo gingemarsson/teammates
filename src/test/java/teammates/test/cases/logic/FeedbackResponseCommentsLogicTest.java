@@ -1,6 +1,7 @@
 package teammates.test.cases.logic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.testng.annotations.BeforeMethod;
@@ -8,9 +9,9 @@ import org.testng.annotations.Test;
 
 import com.google.appengine.api.datastore.Text;
 
-import teammates.common.datatransfer.attributes.FeedbackQuestionAttributes;
-import teammates.common.datatransfer.attributes.FeedbackResponseAttributes;
-import teammates.common.datatransfer.attributes.FeedbackResponseCommentAttributes;
+import teammates.common.datatransfer.CourseRoster;
+import teammates.common.datatransfer.FeedbackParticipantType;
+import teammates.common.datatransfer.attributes.*;
 import teammates.common.exception.EntityDoesNotExistException;
 import teammates.common.exception.InvalidParametersException;
 import teammates.logic.core.FeedbackQuestionsLogic;
@@ -296,6 +297,63 @@ public class FeedbackResponseCommentsLogicTest extends BaseLogicTest {
         frcList = frcLogic.getFeedbackResponseCommentForSession(courseId, "First feedback session");
         assertEquals(0, frcList.size());
     }
+
+    private CourseRoster roster;
+    private FeedbackResponseAttributes response;
+
+    private FeedbackResponseCommentAttributes initTestIsFeedbackParticipantNameVisibleToUser() throws Exception{
+        // init isFeedback tests
+        FeedbackResponseCommentAttributes frComment = restoreFrCommentFromDataBundle("comment1FromT1C1ToR1Q1S1C1");
+        frComment.setId(null);
+        frComment.feedbackQuestionId = getQuestionIdInDataBundle("qn2InSession1InCourse1");
+        frComment.feedbackResponseId = getResponseIdInDataBundle("response2ForQ2S1C1", "qn2InSession1InCourse1");
+        roster = new CourseRoster(
+                createStudentList("team 1", "s1@gmail.com"),
+                createInstructorList("John", "ins1@email.com"));
+
+        response = dataBundle.feedbackResponses.get("response2ForQ2S1C1");
+        return frComment;
+    }
+
+    @Test
+    public void testPath1IsFeedbackParticipantNameVisibleToUser() throws Exception {
+        // Test INSTRUCTOR feedback branch
+        FeedbackResponseCommentAttributes frComment = initTestIsFeedbackParticipantNameVisibleToUser();
+        frComment.isVisibilityFollowingFeedbackQuestion = false;
+        frComment.showGiverNameTo = new ArrayList<FeedbackParticipantType>(Arrays.asList(FeedbackParticipantType.INSTRUCTORS));
+
+        String email = "ins1@email.com";
+
+        boolean res = frcLogic.isNameVisibleToUser(frComment, response, email, roster);
+
+        assertEquals(true, res);
+    }
+
+    private List<StudentAttributes> createStudentList(String... studentData) {
+        List<StudentAttributes> students = new ArrayList<>();
+        for (int i = 0; i < studentData.length; i += 2) {
+            StudentAttributes student = StudentAttributes
+                    .builder("", "", "")
+                    .build();
+            student.team = studentData[i];
+            student.email = studentData[i + 1];
+            students.add(student);
+        }
+        return students;
+    }
+
+    private List<InstructorAttributes> createInstructorList(String... instructorData) {
+        List<InstructorAttributes> instructors = new ArrayList<>();
+        for (int i = 0; i < instructorData.length; i += 2) {
+            @SuppressWarnings("deprecation")
+            InstructorAttributes instructor = InstructorAttributes
+                    .builder("googleId", "courseId", instructorData[i], instructorData[i + 1])
+                    .build();
+            instructors.add(instructor);
+        }
+        return instructors;
+    }
+
 
     private void verifyExceptionThrownFromCreateFrComment(
             FeedbackResponseCommentAttributes frComment, String expectedMessage)
