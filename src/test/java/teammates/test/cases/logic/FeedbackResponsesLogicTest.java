@@ -3,7 +3,6 @@ package teammates.test.cases.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -67,8 +66,6 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
         testSpecialCharactersInTeamName();
         testDeleteFeedbackResponsesForCourse();
     }
-
-
 
     private void testSpecialCharactersInTeamName() {
         ______TS("test special characters");
