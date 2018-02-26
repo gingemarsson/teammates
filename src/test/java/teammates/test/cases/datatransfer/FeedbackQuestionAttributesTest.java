@@ -346,4 +346,20 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         assertFalse(question.showResponsesTo.contains(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS));
     }
 
+    @Test
+    public void testEqualsCreatorEmail() {
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        first.creatorEmail = "DemoCreatorEmail1";
+        snd.creatorEmail = "DemoCreatorEmail2";
+
+        // first.creatorEmail is not equal to snd.creatorEmail
+        boolean a = first.equals(snd);
+
+        snd.creatorEmail = "DemoCreatorEmail1";
+        // first.creatorEmail is equal to snd.creatorEmail
+        boolean b = first.equals(snd);
+        assertTrue(b);
+    }
 }
