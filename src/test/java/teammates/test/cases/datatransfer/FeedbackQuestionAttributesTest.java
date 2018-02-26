@@ -346,4 +346,20 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         assertFalse(question.showResponsesTo.contains(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS));
     }
 
+    @Test
+    public void testEqualsFeedbackSessionName() {
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        first.feedbackSessionName = "DemoFeedbackSessionName1";
+        snd.feedbackSessionName = "DemoFeedbackSessionName2";
+
+        // first.feedbackSessionName is not equal to snd.feedbackSessionName
+        boolean a = first.equals(snd);
+
+        snd.feedbackSessionName = "DemoFeedbackSessionName1";
+        // first.feedbackSessionName is equal to snd.feedbackSessionName
+        boolean b = first.equals(snd);
+        assertTrue(b);
+    }
 }
