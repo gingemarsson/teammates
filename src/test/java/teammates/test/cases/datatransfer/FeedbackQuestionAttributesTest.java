@@ -346,4 +346,20 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         assertFalse(question.showResponsesTo.contains(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS));
     }
 
+    @Test
+    public void testEqualsCourseId() {
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        first.courseId = "DemoCourseID1";
+        snd.courseId = "DemoCourseID2";
+
+        // first.courseId is not equal to snd.courseId
+        boolean a = first.equals(snd);
+
+        snd.courseId = "DemoCourseID1";
+        // first.courseId is equal to snd.courseId
+        boolean b = first.equals(snd);
+        assertTrue(b);
+    }
 }
