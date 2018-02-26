@@ -3,6 +3,7 @@ package teammates.test.cases.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -55,6 +56,7 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
     @Test
     public void allTests() throws Exception {
         testIsNameVisibleTo();
+        testIsNameVisibleToInvalidInput();
         testGetViewableResponsesForQuestionInSection();
         testUpdateFeedbackResponse();
         testUpdateFeedbackResponsesForChangingTeam();
@@ -65,6 +67,8 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
         testSpecialCharactersInTeamName();
         testDeleteFeedbackResponsesForCourse();
     }
+
+
 
     private void testSpecialCharactersInTeamName() {
         ______TS("test special characters");
@@ -573,6 +577,37 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
         ______TS("null question");
 
         assertFalse(frLogic.isNameVisibleToUser(null, fr, student.email, UserRole.STUDENT, false, roster));
+
+    }
+
+    public void testIsNameVisibleToInvalidInput() {
+
+        ______TS("testIsNameVisibleToInvalidInput");
+
+        StudentAttributes student = dataBundle.students.get("student1InCourse1");
+
+        FeedbackQuestionAttributes fq = getQuestionFromDatastore("qn3InSession1InCourse1");
+        FeedbackResponseAttributes fr = getResponseFromDatastore("response1ForQ3S1C1");
+
+        // Modify list of recepient to invalid state
+        fq.showRecipientNameTo.clear();
+        fq.showRecipientNameTo.add(FeedbackParticipantType.NONE);
+
+        CourseRoster roster = new CourseRoster(
+                new StudentsDb().getStudentsForCourse(fq.courseId),
+                new InstructorsDb().getInstructorsForCourse(fq.courseId));
+
+        try {
+            // Should throw AssertionError
+            frLogic.isNameVisibleToUser(fq, fr, student.email, UserRole.STUDENT, false, roster);
+            signalFailureToDetectException("Should have detected that showRecipientNameTo contains no valid values");
+        } catch (AssertionError e) {
+            AssertHelper.assertContains(
+                    "Invalid FeedbackParticipantType for showNameTo in " +
+                            "FeedbackResponseLogic.isFeedbackParticipantNameVisibleToUser()",
+                    e.getMessage());
+        }
+
 
     }
 
