@@ -1,25 +1,14 @@
 package teammates.test.cases.logic;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.testng.annotations.Test;
 
 import com.google.appengine.api.datastore.Text;
 
-import teammates.common.datatransfer.DataBundle;
-import teammates.common.datatransfer.FeedbackParticipantType;
-import teammates.common.datatransfer.FeedbackSessionDetailsBundle;
-import teammates.common.datatransfer.FeedbackSessionQuestionsBundle;
-import teammates.common.datatransfer.FeedbackSessionResultsBundle;
-import teammates.common.datatransfer.FeedbackSessionStats;
-import teammates.common.datatransfer.FeedbackSessionType;
+import teammates.common.datatransfer.*;
 import teammates.common.datatransfer.attributes.CourseAttributes;
 import teammates.common.datatransfer.attributes.FeedbackQuestionAttributes;
 import teammates.common.datatransfer.attributes.FeedbackResponseAttributes;
@@ -35,8 +24,10 @@ import teammates.common.util.Const;
 import teammates.common.util.ThreadHelper;
 import teammates.common.util.TimeHelper;
 import teammates.logic.core.FeedbackQuestionsLogic;
+import teammates.logic.core.FeedbackResponseCommentsLogic;
 import teammates.logic.core.FeedbackResponsesLogic;
 import teammates.logic.core.FeedbackSessionsLogic;
+import teammates.storage.entity.FeedbackResponse;
 import teammates.test.driver.AssertHelper;
 import teammates.test.driver.TimeHelperExtension;
 

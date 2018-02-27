@@ -1536,7 +1536,7 @@ public final class FeedbackSessionsLogic {
     }
 
     /* Get the feedback results for user in a section iterated by questions */
-    private FeedbackSessionResultsBundle getFeedbackSessionResultsForUserInSectionByQuestions(
+    public FeedbackSessionResultsBundle getFeedbackSessionResultsForUserInSectionByQuestions(
             String feedbackSessionName, String courseId, String userEmail,
             UserRole role, String section)
             throws EntityDoesNotExistException {
@@ -1808,7 +1808,7 @@ public final class FeedbackSessionsLogic {
     /*
     * Gets emails of student's teammates if student is not null, else returns an empty Set<String>
     */
-    private Set<String> getTeammateEmails(String courseId, StudentAttributes student) {
+    public Set<String> getTeammateEmails(String courseId, StudentAttributes student) {
         Set<String> studentsEmailInTeam = new HashSet<>();
         if (student != null) {
             List<StudentAttributes> studentsInTeam = studentsLogic.getStudentsForTeam(student.team, courseId);
@@ -1972,7 +1972,7 @@ public final class FeedbackSessionsLogic {
         }
     }
 
-    private boolean isResponseVisibleForUser(String userEmail,
+    public boolean isResponseVisibleForUser(String userEmail,
             UserRole role, StudentAttributes student,
             Set<String> studentsEmailInTeam,
             FeedbackResponseAttributes response,
