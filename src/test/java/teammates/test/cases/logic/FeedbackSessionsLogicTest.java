@@ -2157,4 +2157,25 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         assertTrue(fsLogic.getFeedbackSessionsForCourse("idOfTypicalCourse1").isEmpty());
     }
 
+
+    @Test
+    public void testGetFeedbackSessionResultsForEntityDoesNotExistException() {
+        // contract:
+        // Check that if no session exists in database then throw EntityDoesNotExistException
+
+        try {
+            fsLogic.getFeedbackSessionResultsForUserInSectionByQuestions("", "idOfTypicalCourse2", "instructor1@course2.tmt", UserRole.INSTRUCTOR, "");
+            Assert.fail();
+        } catch (EntityDoesNotExistException e) {
+            Assert.assertNotNull(e);
+        }
+
+        try {
+            fsLogic.getFeedbackSessionResultsForUserInSectionByQuestions("Private feedback session", "idOfTypicalCourse2", "instructor1@course2.tmt", UserRole.INSTRUCTOR, "");
+        } catch (EntityDoesNotExistException e) {
+            Assert.fail();
+        }
+
+    }
+
 }
