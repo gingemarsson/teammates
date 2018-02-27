@@ -378,6 +378,7 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
         FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
 
+
         List<FeedbackParticipantType> instructors = Arrays.asList(FeedbackParticipantType.INSTRUCTORS);
         List<FeedbackParticipantType> students = Arrays.asList(FeedbackParticipantType.STUDENTS);
 
@@ -460,6 +461,29 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
 
         snd.courseId = "DemoCourseID1";
         // first.courseId is equal to snd.courseId
+
+        boolean b = first.equals(snd);
+        assertFalse(a);
+        assertTrue(b);
+    }
+
+    @Test
+    public void testEqualsCreatorEmail() {
+        // If creatorEmail is the same for both objects, equals should return true (when all other attributes are
+        // null). If creatorEmail is different for the two objects, equals should return false (when all other
+        // attributes are null).
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        first.creatorEmail = "DemoCreatorEmail1";
+        snd.creatorEmail = "DemoCreatorEmail2";
+
+        // first.creatorEmail is not equal to snd.creatorEmail
+        boolean a = first.equals(snd);
+
+        snd.creatorEmail = "DemoCreatorEmail1";
+        // first.creatorEmail is equal to snd.creatorEmail
+
         boolean b = first.equals(snd);
         assertFalse(a);
         assertTrue(b);
