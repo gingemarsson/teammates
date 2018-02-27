@@ -2205,4 +2205,28 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         Assert.assertTrue(bundle.responseComments.isEmpty());
     }
 
+
+    @Test
+    public void testIsResponseVisibleForStudentInTeam() {
+        //contract:
+        // If user email is teamEmail  and user a student return true 
+        DataBundle data = getTypicalDataBundle();
+        StudentAttributes studentAttributes = data.students.get("student1InCourse1");
+        FeedbackQuestionAttributes questionAttributes = data.feedbackQuestions.get("qn1InSession1InCourse1");
+        FeedbackResponseAttributes responseAttributes = data.feedbackResponses.get("response1ForQ1S1C1");
+        InstructorAttributes instructorAttributes = data.instructors.get("instructor1OfCourse1");
+        Set<String> studentsEmailInTeam = fsLogic.getTeammateEmails("idOfTypicalCourse1", studentAttributes);
+
+        boolean result = fsLogic.isResponseVisibleForUser(studentAttributes.email, UserRole.STUDENT, studentAttributes, studentsEmailInTeam, responseAttributes, questionAttributes, instructorAttributes);
+
+        Assert.assertTrue(result);
+
+        // change student
+        studentAttributes = data.students.get("student1InCourse2");
+
+        result = fsLogic.isResponseVisibleForUser(studentAttributes.email, UserRole.STUDENT, studentAttributes, studentsEmailInTeam, responseAttributes, questionAttributes, instructorAttributes);
+
+        Assert.assertFalse(result);
+    }
+
 }
