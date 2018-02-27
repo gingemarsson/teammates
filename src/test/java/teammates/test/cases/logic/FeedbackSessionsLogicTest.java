@@ -2156,6 +2156,20 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
         fsLogic.deleteFeedbackSessionsForCourseCascade("idOfTypicalCourse1");
         assertTrue(fsLogic.getFeedbackSessionsForCourse("idOfTypicalCourse1").isEmpty());
     }
+    
+    @Test
+    public void testSectionByQuestionsQuestionResponse() throws EntityDoesNotExistException {
+        // contract:
+        // Get FeedbackResponses For questions in Private session created by user => instructor1
+        // exercises code when a question has gotten a response
+
+        FeedbackSessionResultsBundle bundle = fsLogic.getFeedbackSessionResultsForUserInSectionByQuestions("Private feedback session", "idOfTypicalCourse2", "instructor1@course2.tmt", UserRole.INSTRUCTOR, "");
+        boolean isPrivate = bundle.feedbackSession.getFeedbackSessionType().name().equals("PRIVATE");
+        Assert.assertTrue(isPrivate);
+        boolean isFeedbackSessionAttributeFound = bundle.responses.get(0).getId().equals("agR0ZXN0chYLEhBGZWVkYmFja1F1ZXN0aW9uGBAM%instructor1@course2.tmt%student1InCourse2@gmail.tmt");
+        Assert.assertTrue(isFeedbackSessionAttributeFound);
+    }
+
 
 
     @Test
