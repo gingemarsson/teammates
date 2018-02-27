@@ -59,4 +59,17 @@ public class AdminSessionsPageActionTest extends BaseActionTest{
         assertTrue(c);
         assertFalse(d);
     }
+
+    public void checkAllParametersTestDefault(){
+        //checkAllParams(String s) should be false when s is not equals to either
+        //"null" or "notNull"
+        String[] submissionParams = new String[] {};
+        AdminSessionsPageAction a = getAction(submissionParams);
+        boolean b = a.checkAllParameters("invalid condition");
+        boolean c = a.checkAllParameters("123");
+
+        assertFalse(b);
+        assertFalse(c);
+    }
+
 }
