@@ -371,10 +371,34 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
     }
 
     @Test
+    public void testEqualsShowRecipientNameTo() {
+        // If showRecipientNameTo is the same for both objects, equals should return true (when all other attributes are
+        // null). If showRecipientNameTo is different for the two objects, equals should return false (when all other
+        // attributes are null).
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        List<FeedbackParticipantType> instructors = Arrays.asList(FeedbackParticipantType.INSTRUCTORS);
+        List<FeedbackParticipantType> students = Arrays.asList(FeedbackParticipantType.STUDENTS);
+
+        first.showRecipientNameTo = instructors;
+        snd.showRecipientNameTo = students;
+
+        boolean a = first.equals(snd);
+        // first.showRecipientNameTo is not equal to snd.showRecipientNameTo
+        assertFalse(a);
+
+        // first.showRecipientNameTo is equal to snd.showRecipientNameTo
+        snd.showRecipientNameTo = instructors;
+        assertTrue(first.equals(snd));
+    }
+
+    @Test
     public void testEqualsShowGiverNameTo() {
         // If showGiverNameTo is the same for both objects, equals should return true (when all other attributes are
         // null). If showGiverNameTo is different for the two objects, equals should return false (when all other
         // attributes are null).
+
         FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
         FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
 
@@ -391,8 +415,8 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         // first.showGiverNameTo is equal to snd.showGiverNameTo
         snd.showGiverNameTo = instructors;
         assertTrue(first.equals(snd));
-
     }
+
     @Test
     public void testEqualsCourseId() {
         // If courseId is the same for both objects, equals should return true (when all other attributes are
