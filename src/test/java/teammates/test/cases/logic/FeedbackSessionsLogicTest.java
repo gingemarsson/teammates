@@ -2192,4 +2192,17 @@ public class FeedbackSessionsLogicTest extends BaseLogicTest {
 
     }
 
+    
+    @Test
+    public void testGetFeedbackSessionResultsForVisibleResponseCommentsAttributes() throws EntityDoesNotExistException {
+        // contract:
+        // check that FeedbackResponseCommentAttributes is isVisibleResponseComment for instrcutor
+
+        FeedbackSessionResultsBundle bundle = fsLogic.getFeedbackSessionResultsForUserInSectionByQuestions("First feedback session", "idOfTypicalCourse1", "instructor1@course1.tmt", UserRole.INSTRUCTOR, null);
+        Assert.assertTrue(!bundle.responseComments.isEmpty());
+
+        bundle = fsLogic.getFeedbackSessionResultsForUserInSectionByQuestions("First feedback session", "idOfTypicalCourse1", "student1InCourse1@gmail.tmt", UserRole.STUDENT, null);
+        Assert.assertTrue(bundle.responseComments.isEmpty());
+    }
+
 }
