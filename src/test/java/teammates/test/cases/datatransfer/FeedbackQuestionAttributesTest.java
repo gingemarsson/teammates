@@ -363,6 +363,7 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         snd.creatorEmail = "DemoCreatorEmail1";
         // first.creatorEmail is equal to snd.creatorEmail
         boolean b = first.equals(snd);
+        assertFalse(a);
         assertTrue(b);
     }
 }
