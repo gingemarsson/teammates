@@ -330,6 +330,21 @@ public class FeedbackResponseCommentsLogicTest extends BaseLogicTest {
     }
 
     @Test
+    public void testPath3IsFeedbackParticipantNameVisibleToUser() throws Exception {
+        // Checks if the name is visible to user if the type of FeedbackParticipant is RECEIVER.
+        FeedbackResponseCommentAttributes frComment = initTestIsFeedbackParticipantNameVisibleToUser();
+        frComment.isVisibilityFollowingFeedbackQuestion = false;
+        frComment.showGiverNameTo = new ArrayList<FeedbackParticipantType>(Arrays.asList(FeedbackParticipantType.RECEIVER));
+
+        String email = "s1@gmail.com";
+        response.recipient = email;
+
+        boolean res = frcLogic.isNameVisibleToUser(frComment, response, email, roster);
+
+        assertEquals(true, res);
+    }
+    
+    @Test
     public void testPath2IsFeedbackParticipantNameVisibleToUser() throws Exception {
         // Checks if the name is visible to user if the type of FeedbackParticipant is OWN_TEAM_MEMBERS.
         FeedbackResponseCommentAttributes frComment = initTestIsFeedbackParticipantNameVisibleToUser();
@@ -338,6 +353,7 @@ public class FeedbackResponseCommentsLogicTest extends BaseLogicTest {
 
         String email = "s1@gmail.com";
         response.giver = email;
+
         boolean res = frcLogic.isNameVisibleToUser(frComment, response, email, roster);
 
         assertEquals(true, res);
