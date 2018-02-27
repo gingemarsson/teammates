@@ -488,4 +488,26 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         assertFalse(a);
         assertTrue(b);
     }
+
+    @Test
+    public void testEqualsFeedbackSessionName() {
+        // If feedbackSessionName is the same for both objects, equals should return true (when all other attributes are
+        // null). If feedbackSessionName is different for the two objects, equals should return false (when all other
+        // attributes are null).
+
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        first.feedbackSessionName = "DemoFeedbackSessionName1";
+        snd.feedbackSessionName = "DemoFeedbackSessionName2";
+
+        // first.feedbackSessionName is not equal to snd.feedbackSessionName
+        boolean a = first.equals(snd);
+
+        snd.feedbackSessionName = "DemoFeedbackSessionName1";
+        // first.feedbackSessionName is equal to snd.feedbackSessionName
+        boolean b = first.equals(snd);
+        assertFalse(a);
+        assertTrue(b);
+    }
 }
