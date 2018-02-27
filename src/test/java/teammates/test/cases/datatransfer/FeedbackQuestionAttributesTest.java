@@ -371,6 +371,30 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
     }
 
     @Test
+    public void testEqualsShowResponsesTo() {
+        // If showResponsesTo is the same for both objects, equals should return true (when all other attributes are
+        // null). If showResponsesTo is different for the two objects, equals should return false (when all other
+        // attributes are null).
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        List<FeedbackParticipantType> instructors = Arrays.asList(FeedbackParticipantType.INSTRUCTORS);
+        List<FeedbackParticipantType> students = Arrays.asList(FeedbackParticipantType.STUDENTS);
+
+        first.showResponsesTo = instructors;
+        snd.showResponsesTo = students;
+
+        boolean a = first.equals(snd);
+        // first.showResponsesTo is not equal to snd.showResponsesTo
+        assertFalse(a);
+
+        snd.showResponsesTo = instructors;
+        boolean b = first.equals(snd);
+        // first.showResponsesTo is equal to snd.showResponsesTo
+        assertTrue(b);
+    }
+
+    @Test
     public void testEqualsShowRecipientNameTo() {
         // If showRecipientNameTo is the same for both objects, equals should return true (when all other attributes are
         // null). If showRecipientNameTo is different for the two objects, equals should return false (when all other
@@ -388,9 +412,10 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         // first.showRecipientNameTo is not equal to snd.showRecipientNameTo
         assertFalse(a);
 
-        // first.showRecipientNameTo is equal to snd.showRecipientNameTo
         snd.showRecipientNameTo = instructors;
-        assertTrue(first.equals(snd));
+        boolean b = first.equals(snd);
+        // first.showRecipientNameTo is equal to snd.showRecipientNameTo
+        assertTrue(b);
     }
 
     @Test
@@ -412,9 +437,10 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         // first.showGiverNameTo is not equal to snd.showGiverNameTo
         assertFalse(a);
 
-        // first.showGiverNameTo is equal to snd.showGiverNameTo
         snd.showGiverNameTo = instructors;
-        assertTrue(first.equals(snd));
+        boolean b = first.equals(snd);
+        // first.showGiverNameTo is equal to snd.showGiverNameTo
+        assertTrue(b);
     }
 
     @Test
