@@ -364,6 +364,7 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         snd.feedbackSessionName = "DemoFeedbackSessionName1";
         // first.feedbackSessionName is equal to snd.feedbackSessionName
         boolean b = first.equals(snd);
+        assertFalse(a);
         assertTrue(b);
     }
 }
