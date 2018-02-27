@@ -3,6 +3,7 @@ package teammates.test.cases.datatransfer;
 import static teammates.common.util.Const.EOL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import teammates.common.datatransfer.questions.FeedbackTextQuestionDetails;
 import teammates.common.util.Const;
 import teammates.common.util.FieldValidator;
 import teammates.common.util.StringHelper;
+import teammates.storage.entity.FeedbackQuestion;
 import teammates.test.cases.BaseTestCase;
 
 /**
@@ -26,6 +28,28 @@ import teammates.test.cases.BaseTestCase;
 public class FeedbackQuestionAttributesTest extends BaseTestCase {
 
     private DataBundle typicalBundle = getTypicalDataBundle();
+
+    //First test for equals
+    @Test
+    public void testEqualsNull() throws Exception {
+        // if a.equals(b)
+        //If all parameters of a and b are null, return true.
+        //If all parameters of a are null and b = null, return false.
+        //If any parameter in a!= null and all parameters in b is null, return false
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes() ;
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes() ;
+
+            boolean  a = first.equals(null);
+            boolean b = first.equals(snd);
+            first.courseId = "1";
+            boolean c = first.equals(snd);
+            assertFalse(a);
+            assertTrue(b);
+            assertFalse(c);
+
+         // attributes to be set after construction
+        }
+
 
     private static class FeedbackQuestionAttributesWithModifiableTimestamp extends FeedbackQuestionAttributes {
 
@@ -344,6 +368,125 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         assertFalse(question.showGiverNameTo.contains(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS));
         assertFalse(question.showRecipientNameTo.contains(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS));
         assertFalse(question.showResponsesTo.contains(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS));
+    }
+
+    @Test
+    public void testEqualsShowResponsesTo() {
+        // If showResponsesTo is the same for both objects, equals should return true (when all other attributes are
+        // null). If showResponsesTo is different for the two objects, equals should return false (when all other
+        // attributes are null).
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+
+        List<FeedbackParticipantType> instructors = Arrays.asList(FeedbackParticipantType.INSTRUCTORS);
+        List<FeedbackParticipantType> students = Arrays.asList(FeedbackParticipantType.STUDENTS);
+
+        first.showResponsesTo = instructors;
+        snd.showResponsesTo = students;
+
+        boolean a = first.equals(snd);
+        // first.showResponsesTo is not equal to snd.showResponsesTo
+        assertFalse(a);
+
+        snd.showResponsesTo = instructors;
+        boolean b = first.equals(snd);
+        // first.showResponsesTo is equal to snd.showResponsesTo
+        assertTrue(b);
+    }
+
+    @Test
+    public void testEqualsShowRecipientNameTo() {
+        // If showRecipientNameTo is the same for both objects, equals should return true (when all other attributes are
+        // null). If showRecipientNameTo is different for the two objects, equals should return false (when all other
+        // attributes are null).
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        List<FeedbackParticipantType> instructors = Arrays.asList(FeedbackParticipantType.INSTRUCTORS);
+        List<FeedbackParticipantType> students = Arrays.asList(FeedbackParticipantType.STUDENTS);
+
+        first.showRecipientNameTo = instructors;
+        snd.showRecipientNameTo = students;
+
+        boolean a = first.equals(snd);
+        // first.showRecipientNameTo is not equal to snd.showRecipientNameTo
+        assertFalse(a);
+
+        snd.showRecipientNameTo = instructors;
+        boolean b = first.equals(snd);
+        // first.showRecipientNameTo is equal to snd.showRecipientNameTo
+        assertTrue(b);
+    }
+
+    @Test
+    public void testEqualsShowGiverNameTo() {
+        // If showGiverNameTo is the same for both objects, equals should return true (when all other attributes are
+        // null). If showGiverNameTo is different for the two objects, equals should return false (when all other
+        // attributes are null).
+
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        List<FeedbackParticipantType> instructors = Arrays.asList(FeedbackParticipantType.INSTRUCTORS);
+        List<FeedbackParticipantType> students = Arrays.asList(FeedbackParticipantType.STUDENTS);
+
+        first.showGiverNameTo = instructors;
+        snd.showGiverNameTo = students;
+
+        boolean a = first.equals(snd);
+        // first.showGiverNameTo is not equal to snd.showGiverNameTo
+        assertFalse(a);
+
+        snd.showGiverNameTo = instructors;
+        boolean b = first.equals(snd);
+        // first.showGiverNameTo is equal to snd.showGiverNameTo
+        assertTrue(b);
+    }
+
+    @Test
+    public void testEqualsCourseId() {
+        // If courseId is the same for both objects, equals should return true (when all other attributes are
+        // null). If courseId is different for the two objects, equals should return false (when all other
+        // attributes are null).
+
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        first.courseId = "DemoCourseID1";
+        snd.courseId = "DemoCourseID2";
+
+        // first.courseId is not equal to snd.courseId
+        boolean a = first.equals(snd);
+
+        snd.courseId = "DemoCourseID1";
+        // first.courseId is equal to snd.courseId
+
+        boolean b = first.equals(snd);
+        assertFalse(a);
+        assertTrue(b);
+    }
+
+    @Test
+    public void testEqualsCreatorEmail() {
+        // If creatorEmail is the same for both objects, equals should return true (when all other attributes are
+        // null). If creatorEmail is different for the two objects, equals should return false (when all other
+        // attributes are null).
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        first.creatorEmail = "DemoCreatorEmail1";
+        snd.creatorEmail = "DemoCreatorEmail2";
+
+        // first.creatorEmail is not equal to snd.creatorEmail
+        boolean a = first.equals(snd);
+
+        snd.creatorEmail = "DemoCreatorEmail1";
+        // first.creatorEmail is equal to snd.creatorEmail
+
+        boolean b = first.equals(snd);
+        assertFalse(a);
+        assertTrue(b);
     }
 
     @Test
