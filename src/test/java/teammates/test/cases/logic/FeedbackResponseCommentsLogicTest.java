@@ -317,7 +317,7 @@ public class FeedbackResponseCommentsLogicTest extends BaseLogicTest {
 
     @Test
     public void testPath1IsFeedbackParticipantNameVisibleToUser() throws Exception {
-        // Test INSTRUCTOR feedback branch
+        // If the FeedbackParticipant type is INSTRUCTORS and has the correct access rights, the user should be visible.
         FeedbackResponseCommentAttributes frComment = initTestIsFeedbackParticipantNameVisibleToUser();
         frComment.isVisibilityFollowingFeedbackQuestion = false;
         frComment.showGiverNameTo = new ArrayList<FeedbackParticipantType>(Arrays.asList(FeedbackParticipantType.INSTRUCTORS));
@@ -329,14 +329,16 @@ public class FeedbackResponseCommentsLogicTest extends BaseLogicTest {
         assertEquals(true, res);
     }
 
+
     @Test
-    public void testPath4IsFeedbackParticipantNameVisibleToUser() throws Exception {
-        // Checks if the name is visible to user if the type of FeedbackParticipant is STUDENTS.
+    public void testPath2IsFeedbackParticipantNameVisibleToUser() throws Exception {
+        // If the FeedbackParticipant type is OWN_TEAM_MEMBERS and has the correct access rights, the user should be visible.
         FeedbackResponseCommentAttributes frComment = initTestIsFeedbackParticipantNameVisibleToUser();
         frComment.isVisibilityFollowingFeedbackQuestion = false;
-        frComment.showGiverNameTo = new ArrayList<FeedbackParticipantType>(Arrays.asList(FeedbackParticipantType.STUDENTS));
+        frComment.showGiverNameTo = new ArrayList<FeedbackParticipantType>(Arrays.asList(FeedbackParticipantType.OWN_TEAM_MEMBERS));
 
         String email = "s1@gmail.com";
+        response.giver = email;
 
         boolean res = frcLogic.isNameVisibleToUser(frComment, response, email, roster);
 
@@ -345,7 +347,7 @@ public class FeedbackResponseCommentsLogicTest extends BaseLogicTest {
 
     @Test
     public void testPath3IsFeedbackParticipantNameVisibleToUser() throws Exception {
-        // Checks if the name is visible to user if the type of FeedbackParticipant is RECEIVER.
+        // If the FeedbackParticipant type is RECEIVER and has the correct access rights, the user should be visible.
         FeedbackResponseCommentAttributes frComment = initTestIsFeedbackParticipantNameVisibleToUser();
         frComment.isVisibilityFollowingFeedbackQuestion = false;
         frComment.showGiverNameTo = new ArrayList<FeedbackParticipantType>(Arrays.asList(FeedbackParticipantType.RECEIVER));
@@ -359,14 +361,13 @@ public class FeedbackResponseCommentsLogicTest extends BaseLogicTest {
     }
 
     @Test
-    public void testPath2IsFeedbackParticipantNameVisibleToUser() throws Exception {
-        // Checks if the name is visible to user if the type of FeedbackParticipant is OWN_TEAM_MEMBERS.
+    public void testPath4IsFeedbackParticipantNameVisibleToUser() throws Exception {
+        // If the FeedbackParticipant type is STUDENTS and has the correct access rights, the user should be visible.
         FeedbackResponseCommentAttributes frComment = initTestIsFeedbackParticipantNameVisibleToUser();
         frComment.isVisibilityFollowingFeedbackQuestion = false;
-        frComment.showGiverNameTo = new ArrayList<FeedbackParticipantType>(Arrays.asList(FeedbackParticipantType.OWN_TEAM_MEMBERS));
+        frComment.showGiverNameTo = new ArrayList<FeedbackParticipantType>(Arrays.asList(FeedbackParticipantType.STUDENTS));
 
         String email = "s1@gmail.com";
-        response.giver = email;
 
         boolean res = frcLogic.isNameVisibleToUser(frComment, response, email, roster);
 
