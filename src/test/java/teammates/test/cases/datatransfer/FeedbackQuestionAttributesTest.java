@@ -369,4 +369,25 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         assertFalse(question.showResponsesTo.contains(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS));
     }
 
+    @Test
+    public void testEqualsCourseId() {
+        // If courseId is the same for both objects, equals should return true (when all other attributes are
+        // null). If courseId is different for the two objects, equals should return false (when all other
+        // attributes are null).
+
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        first.courseId = "DemoCourseID1";
+        snd.courseId = "DemoCourseID2";
+
+        // first.courseId is not equal to snd.courseId
+        boolean a = first.equals(snd);
+
+        snd.courseId = "DemoCourseID1";
+        // first.courseId is equal to snd.courseId
+        boolean b = first.equals(snd);
+        assertFalse(a);
+        assertTrue(b);
+    }
 }
