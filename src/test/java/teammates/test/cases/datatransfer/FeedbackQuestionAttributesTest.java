@@ -348,6 +348,10 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
 
     @Test
     public void testEqualsCourseId() {
+        // If courseId is the same for both objects, equals should return true (when all other attributes are
+        // null). If courseId is different for the two objects, equals should return false (when all other
+        // attributes are null).
+
         FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
         FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
 
