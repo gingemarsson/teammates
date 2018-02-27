@@ -579,6 +579,11 @@ public class FeedbackResponsesLogicTest extends BaseLogicTest {
 
     public void testIsNameVisibleToInvalidInput() {
 
+        // When the showRecipientNameTo contains no valid FeedbackParticipantType (i.e. INSTRUCTORS, OWN_TEAM_MEMBERS,
+        // OWN_TEAM_MEMBERS_INCLUDING_SELF, RECEIVER, RECEIVER_TEAM_MEMBERS or STUDENTS), but at least one invalid type
+        // (such as NONE) an AssertionError with the following description should be thrown: "Invalid
+        // FeedbackParticipantType for showNameTo in FeedbackResponseLogic.isFeedbackParticipantNameVisibleToUser()".
+
         ______TS("testIsNameVisibleToInvalidInput");
 
         StudentAttributes student = dataBundle.students.get("student1InCourse1");
