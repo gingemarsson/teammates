@@ -314,7 +314,7 @@ public class AdminSessionsPageAction extends Action {
         return numOfTotal;
     }
 
-    private boolean checkAllParameters(String condition) {
+    public boolean checkAllParameters(String condition) {
 
         String startDate = getRequestParamValue(Const.ParamsNames.FEEDBACK_SESSION_STARTDATE);
         String endDate = getRequestParamValue(Const.ParamsNames.FEEDBACK_SESSION_ENDDATE);
