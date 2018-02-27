@@ -364,6 +364,7 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         snd.courseId = "DemoCourseID1";
         // first.courseId is equal to snd.courseId
         boolean b = first.equals(snd);
+        assertFalse(a);
         assertTrue(b);
     }
 }
