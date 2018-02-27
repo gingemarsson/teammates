@@ -3,6 +3,7 @@ package teammates.test.cases.datatransfer;
 import static teammates.common.util.Const.EOL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -369,6 +370,29 @@ public class FeedbackQuestionAttributesTest extends BaseTestCase {
         assertFalse(question.showResponsesTo.contains(FeedbackParticipantType.RECEIVER_TEAM_MEMBERS));
     }
 
+    @Test
+    public void testEqualsShowGiverNameTo() {
+        // If showGiverNameTo is the same for both objects, equals should return true (when all other attributes are
+        // null). If showGiverNameTo is different for the two objects, equals should return false (when all other
+        // attributes are null).
+        FeedbackQuestionAttributes first = new FeedbackQuestionAttributes();
+        FeedbackQuestionAttributes snd = new FeedbackQuestionAttributes();
+
+        List<FeedbackParticipantType> instructors = Arrays.asList(FeedbackParticipantType.INSTRUCTORS);
+        List<FeedbackParticipantType> students = Arrays.asList(FeedbackParticipantType.STUDENTS);
+
+        first.showGiverNameTo = instructors;
+        snd.showGiverNameTo = students;
+
+        boolean a = first.equals(snd);
+        // first.showGiverNameTo is not equal to snd.showGiverNameTo
+        assertFalse(a);
+
+        // first.showGiverNameTo is equal to snd.showGiverNameTo
+        snd.showGiverNameTo = instructors;
+        assertTrue(first.equals(snd));
+
+    }
     @Test
     public void testEqualsCourseId() {
         // If courseId is the same for both objects, equals should return true (when all other attributes are
